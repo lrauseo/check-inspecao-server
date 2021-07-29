@@ -1,0 +1,26 @@
+﻿<Properties StartupConfiguration="{83CC03C9-DDF5-498D-B0C4-0D2F516619DB}|Default">
+  <MonoDevelop.Ide.ItemProperties.CheckInspecao.Api PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CheckInspecao.Api/Program.cs">
+    <Files>
+      <File FileName="CheckInspecao.Api/Startup.cs" Line="1" Column="1" />
+      <File FileName="CheckInspecao.Api/Program.cs" Line="16" Column="47" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CheckInspecao" expanded="True">
+            <Node name="CheckInspecao.Api" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.1"/>
+    <PackageReference Include="DinkToPdf" Version="*"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CheckInspecao.Repository\CheckInspecao.Repository.csproj"/>
+    <ProjectReference Include="..\CheckInspecao.Models\CheckInspecao.Models.csproj"/>
+  </ItemGroup>
+</Project>

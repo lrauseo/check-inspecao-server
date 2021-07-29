@@ -1,0 +1,263 @@
+[
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Possui e cumpre o Manual de Boas Práticas específico para empresa. Subitem 5.2"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Possui e cumpre os procedimentos operacionais padronizados. Subitem 5.2"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Comprovante de Execução de Treinamento de Funcionários. Subitens 5.2; 6.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Programa de Saúde: PPRA, PCMSO, ASO. Subitens 6.2, I, II, III"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Comprovante de Execução de Higienização do Reservatório de Água semestral. Subitem 7.3"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Licença de outorga de uso de fonte alternativa para abastecimento de água concedida pelo DAEE. Subitem 7.4"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Laudo de Análise de Potabilidade de Água proveniente de fonte alternativa. Subitem 7.4.1.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Cópia de análise de cloro residual livre de cada carga de água transportada pelo caminhão pipa, bem como cópia da nota fiscal da empresa fornecedora ou transportadora de água. Subitem 7.5.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Comprovante de Execução de Controle Integrado de Vetores e Pragas Urbanas. Subitem 16.4"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Apresentação de proposta da empresa contratada, contemplando as medidas preventivas a serem adotadas pelo contratante, com relatório técnico da visita. Subitem 16.4, a"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Apresentação do certificado de execução do serviço, informando os produtos utilizados, métodos, registro do MS, indicações para uso médico e responsável técnico. Subitem 16.4, b"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Planilhas de controle de temperatura de câmaras, balcões, congeladores e equipamento térmicos. Subitem 19.2"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Registros ou comprovante de execução comprovando a calibração dos instrumentos e equipamentos de medição. Subitem 9.2.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Registros que comprovem a manutenção preventiva de equipamentos e maquinários. Subitem 9.2.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "DOCUMENTAÇÃO"
+        },
+        "classificacao": "N",
+        "descricao": "Produtos utilizados para higienização de alimentos, de equipamentos e utensílios e anti-sépticos estão regularizados no Ministério da Saúde. Subitens 12.4; 17.3; 6.6.2"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "A responsabilidade técnica é exercida por profissional legalmente habilitado. Subitem 5.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "No caso de EPP ou ME: o proprietário ou pessoa designada possui certificado do curso de Boas práticas emitido por instituição de ensino reconhecido pelo MEC ou CEE. Subitem 6.1.2"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "Cópia dos atestados ASO, com realização de exames clínicos semestrais estão disponíveis para a AS. Subitem 6.2, III"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "O estabelecimento possui e cumpre o PPRA. Subitem 6.2, I"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "Os funcionários responsáveis pela manipulação apresentam-se asseados, sem adornos, unhas curtas, limpas e sem esmalte; não utilizam maquiagem e piercing. Subitens 6.4.1; 6.4.2; 6.4.3"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "I",
+        "descricao": "As mãos estão limpas, livre de ferimentos, se existirem, estão protegidos com cobertura à prova de como água luvas de borracha. Subitem 6.3, VI"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "R",
+        "descricao": "Existência de utilização de luvas descartáveis na manipulação de produtos prontos para o consumo. Subitem 6.5.6"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "Os funcionários usam uniformes fechados, de cor clara, limpos e bem conservados. Subitem 6.5"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "Usam sapatos, limpos, fechados antiderrapantes ou botas de borracha de uso exclusivo no trabalho. Subitem 6.5.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "Os cabelos estão protegidos por toucas ou redes. Subitem 6.4.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "A barba está feita, o bigode aparado. Subitem 6.4.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "O local de manipulação possui pia exclusiva para lavagem das mãos, abastecida com sabonete líquido anti-séptico, papel toalha não reciclado. Subitem 13.1.1"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "R",
+        "descricao": "Existem cartazes orientando a lavagem e desinfecção das mãos.Subitem 6.6"
+    },
+    {
+        "id": 0,
+        "grupo": {
+            "id": 0,
+            "descricao": "RECURSOS HUMANOS"
+        },
+        "classificacao": "N",
+        "descricao": "Funcionários usam EPIs: uniforme, avental, botas, luvas, capas. Subitens 6.5; 6.5.1; 6.5.6; 6.5.9; 6.5.10; 6.5.11;6.9"
+    }
+]

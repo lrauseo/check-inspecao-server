@@ -1,0 +1,16 @@
+{
+    "id": 0,
+    "nome": "Cliente Teste",
+    "cpf": "12345678911",
+    "dataCadastro": "2021-03-02T18:13:59.853624+00:00",
+    "Login":{
+        "id": 0,
+        "usuariologin": "cliente",
+        "senha": "123"
+    },
+    "empresa":{
+        "id":0,
+        "razaoSocial": "Empresa Teste"
+
+    }      
+}
