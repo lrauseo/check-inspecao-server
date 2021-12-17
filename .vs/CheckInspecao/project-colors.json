@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "83cc03c9-ddf5-498d-b0c4-0d2f516619db": {
+      "ProjectGuid": "83cc03c9-ddf5-498d-b0c4-0d2f516619db",
+      "DisplayName": "CheckInspecao.Api",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
