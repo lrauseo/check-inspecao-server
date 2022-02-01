@@ -1,5 +1,6 @@
 using AutoMapper;
 using CheckInspecao.Models;
+using CheckInspecao.Transport;
 using CheckInspecao.Transport.DTO;
 
 namespace Cadastros.Transport.AutoMapper
@@ -9,6 +10,7 @@ namespace Cadastros.Transport.AutoMapper
         public ProfileConfiguration()
         {
             CreateMap<Usuario,UsuarioDTO>().ReverseMap();
+            CreateMap<UsuarioEmpresa,UsuarioEmpresaDTO>().ReverseMap();
             CreateMap<Grupo,GrupoDTO>().ReverseMap();            
             CreateMap<DocumentoInspecao,DocumentoInspecaoDTO>().ReverseMap();
             CreateMap<ItemInspecao,ItemInspecaoDTO>().ReverseMap();

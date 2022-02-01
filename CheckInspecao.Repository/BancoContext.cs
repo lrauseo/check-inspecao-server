@@ -3,9 +3,10 @@ using CheckInspecao.Models;
 using CheckInspecao.Repository.Mapping;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace CheckInspecao.Repository
 {
-    public class BancoContext : DbContext    
+    public class BancoContext : DbContext
     {
         public DbSet<Grupo> Grupos { get; set; }
         public DbSet<ItemInspecao> ItensInspecao { get; set; }
@@ -16,15 +17,17 @@ namespace CheckInspecao.Repository
         public DbSet<Foto> Fotos { get; set; }
         public DbSet<Login> Logins { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
+        public DbSet<UsuarioEmpresa> UsuariosEmpresas { get; set; }
         public BancoContext(DbContextOptions<BancoContext> options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-          modelBuilder.ApplyConfiguration(new DocumentoInspecaoMap());
-        
+            modelBuilder.ApplyConfiguration(new DocumentoInspecaoMap());
+            modelBuilder.ApplyConfiguration(new UsuarioEmpresaMap());
+
         }
     }
 

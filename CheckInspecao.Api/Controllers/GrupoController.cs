@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using CheckInspecao.Transport.Exceptions;
 using CheckInspecao.Transport.GrupoTransport;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -8,6 +9,7 @@ namespace CheckInspecao.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(Roles = "User,Admin")]
     public class GrupoController : ControllerBase
     {
         private readonly ILogger<GrupoTransport> _logger;
@@ -19,7 +21,7 @@ namespace CheckInspecao.Api.Controllers
             _grupoTransport = grupo;
         }
 
-        [HttpGet]
+        [HttpGet]        
         public async Task<IActionResult> GetGrupos()
         {
             try

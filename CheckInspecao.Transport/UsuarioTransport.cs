@@ -3,7 +3,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CheckInspecao.Models;
 using CheckInspecao.Repository;
+using CheckInspecao.Transport.Criptogratia;
 using CheckInspecao.Transport.DTO;
+using Microsoft.Extensions.Options;
 
 namespace CheckInspecao.Transport
 {
@@ -18,23 +20,41 @@ namespace CheckInspecao.Transport
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMapper _mapper;
 
-        public UsuarioTransport(IUsuarioRepository usuarioRepository, IMapper mapper)
+        public ITokenTransport _tokenTransport { get; }
+
+        private readonly IOptions<CriptografiaConfigurationDTO> _criptografiaConfig;
+        private readonly CriptografiaHelper _criptografiaHelper;
+
+        public UsuarioTransport(IUsuarioRepository usuarioRepository, IMapper mapper, ITokenTransport tokenTransport, IOptions<CriptografiaConfigurationDTO> criptografiaConfig)
         {
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
+            _tokenTransport = tokenTransport;
+            _criptografiaConfig = criptografiaConfig;
+            _criptografiaHelper = new CriptografiaHelper(_criptografiaConfig);
+            
         }
         public async Task<UsuarioAutenticadoDTO> AutenticaUsuario(string login, string senha)
         {
             try
             {
-                var usuario = await _usuarioRepository.AutenticaUsuario(login, senha);
+                var _criptografiaHelper = new CriptografiaHelper(_criptografiaConfig);
+                 var senhaCriptoteste = _criptografiaHelper.AesEncrypt("123");
+                var senhaCripto = senha;
+                var senhaText = _criptografiaHelper.AesDecrypt(senhaCripto);
+                var senhaUsuario = _criptografiaHelper.HMacSha256Encrypt(senhaText);
+                var usuario = await _usuarioRepository.AutenticaUsuario(login, senhaUsuario);
+
                 if (usuario == null)
                     throw new System.Exception("Usuario/Senha Inválidos");
+
+                var usuarioDto = _mapper.Map<UsuarioDTO>(usuario);
+                
+                var tokenDTO =  _tokenTransport.GetTokenDTO(usuarioDto);
                 var autenticado = new UsuarioAutenticadoDTO()
                 {
-                    Usuario = _mapper.Map<UsuarioDTO>(usuario),
-                    Token = "aqui vai um token",
-                    ValidadeToken = DateTime.Now.AddDays(1)
+                    Token = tokenDTO.Token,
+                    ValidadeToken = tokenDTO.Expiration
                 };
                 return autenticado;
             }
@@ -47,10 +67,12 @@ namespace CheckInspecao.Transport
         public async Task<UsuarioDTO> SalvarUsuario(UsuarioDTO usuario)
         {
             try
-            {
-                if(usuario.Login == null)
-                    throw new Exception("Login não cadastrado");
+            {                
                 var usuarioDB = _mapper.Map<Usuario>(usuario);
+                var _criptografiaHelper = new CriptografiaHelper(_criptografiaConfig);
+                var senhaText = _criptografiaHelper.AesDecrypt(usuario.Senha);
+                usuarioDB.Senha = _criptografiaHelper.HMacSha256Encrypt(senhaText);
+
                 var usuarioSalvo = await _usuarioRepository.SalvarUsuario(usuarioDB);
                 return _mapper.Map<UsuarioDTO>(usuarioSalvo);
 

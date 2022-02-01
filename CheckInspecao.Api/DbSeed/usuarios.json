@@ -1,20 +1,19 @@
 {
-    "id": 0,
-    "nome": "Administrador",
-    "Login":{
-        "id": 0,
-        "usuariologin": "admin",
-        "senha": "123"
-    },
-    "Empresa": {
-        "id":"0",
-        "razaosocial":"Empresa Teste",
-        "cnpj": "40913355000196",
-        "endereco":"Rua Teste",
-        "numero":231,
-        "complemento": null,
-        "cep":"83322191",
-        "cidade":"Pinhais",
-        "uf":"PR"        
-    }
+  "id": 0,
+  "nome": "Administrador",
+  "email": "admin@email.com",
+  "senha": "CzQb9ZdqubVIZwesLT0YDrCUs/rFtjScfnLmHyS30Dg=",
+  "role":  "Admin"
+
+  //"Empresa": {
+  //    "id":"0",
+  //    "razaosocial":"Empresa Teste",
+  //    "cnpj": "40913355000196",
+  //    "endereco":"Rua Teste",
+  //    "numero":231,
+  //    "complemento": null,
+  //    "cep":"83322191",
+  //    "cidade":"Pinhais",
+  //    "uf":"PR"        
+  //}
 }

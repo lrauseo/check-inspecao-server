@@ -21,12 +21,7 @@ namespace CheckInspecao.Repository
         public async Task<Usuario> SalvarUsuario(Usuario usuario)
         {
             try
-            {
-                var empresa = await _context.Empresas.FirstOrDefaultAsync(e => e.Cnpj == usuario.Empresa.Cnpj);
-                if (empresa == null)
-                    throw new System.Exception("Empresa não cadastrada, favor entrar em contato com o Administrador");
-                else
-                    usuario.Empresa = empresa;
+            {                                
                 Update<Usuario>(usuario);
                 await SaveChangesAsync();
                 return usuario;
@@ -41,11 +36,10 @@ namespace CheckInspecao.Repository
         {
             try
             {
-                var usuarioAuth = await _context.Usuarios
-                                        .Include(i => i.Login)
-                                        .Include(i => i.Empresa)
-                                        .FirstOrDefaultAsync(a => a.Login.UsuarioLogin.ToLower() == login
-                                            && a.Login.Senha == senha);
+                var usuarioAuth = await _context.Usuarios                                        
+                                        .Include(i => i.Empresas)
+                                        .FirstOrDefaultAsync(a => a.Email == login
+                                            && a.Senha == senha);
                 return usuarioAuth;
             }
             catch (System.Exception ex)

@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CheckInspecao.Repository.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20211217011910_v2")]
-    partial class v2
+    [Migration("20220131135014_v1.1")]
+    partial class v11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3");
+                .HasAnnotation("ProductVersion", "5.0.13");
 
             modelBuilder.Entity("CheckInspecao.Models.Cliente", b =>
                 {
@@ -220,8 +220,8 @@ namespace CheckInspecao.Repository.Migrations
                     b.Property<byte[]>("Assinatura")
                         .HasColumnType("BLOB");
 
-                    b.Property<int?>("EmpresaId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
 
                     b.Property<byte[]>("FotoPerfil")
                         .HasColumnType("BLOB");
@@ -232,13 +232,35 @@ namespace CheckInspecao.Repository.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Role")
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("EmpresaId");
+                    b.Property<string>("Senha")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Sexo")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("LoginId");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.UsuarioEmpresa", b =>
+                {
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("EmpresaId", "UsuarioId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("UsuariosEmpresas");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.Cliente", b =>
@@ -257,6 +279,10 @@ namespace CheckInspecao.Repository.Migrations
                     b.HasOne("CheckInspecao.Models.Usuario", "UsuarioInspecao")
                         .WithMany()
                         .HasForeignKey("UsuarioInspecaoId");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("UsuarioInspecao");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.Foto", b =>
@@ -264,6 +290,8 @@ namespace CheckInspecao.Repository.Migrations
                     b.HasOne("CheckInspecao.Models.ItemDocumentoInspecao", "ItemInspecao")
                         .WithMany("Fotos")
                         .HasForeignKey("ItemInspecaoId");
+
+                    b.Navigation("ItemInspecao");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.ItemDocumentoInspecao", b =>
@@ -275,6 +303,10 @@ namespace CheckInspecao.Repository.Migrations
                     b.HasOne("CheckInspecao.Models.ItemInspecao", "Item")
                         .WithMany()
                         .HasForeignKey("ItemId");
+
+                    b.Navigation("Documento");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.ItemInspecao", b =>
@@ -282,17 +314,66 @@ namespace CheckInspecao.Repository.Migrations
                     b.HasOne("CheckInspecao.Models.Grupo", "Grupo")
                         .WithMany()
                         .HasForeignKey("GrupoId");
+
+                    b.Navigation("Grupo");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.Usuario", b =>
                 {
-                    b.HasOne("CheckInspecao.Models.Empresa", "Empresa")
-                        .WithMany("Usuarios")
-                        .HasForeignKey("EmpresaId");
-
-                    b.HasOne("CheckInspecao.Models.Login", "Login")
+                    b.HasOne("CheckInspecao.Models.Login", null)
                         .WithMany("Usuarios")
                         .HasForeignKey("LoginId");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.UsuarioEmpresa", b =>
+                {
+                    b.HasOne("CheckInspecao.Models.Empresa", "Empresa")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CheckInspecao.Models.Usuario", "Usuario")
+                        .WithMany("Empresas")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.Cliente", b =>
+                {
+                    b.Navigation("Documentos");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.DocumentoInspecao", b =>
+                {
+                    b.Navigation("Itens");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.Empresa", b =>
+                {
+                    b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.ItemDocumentoInspecao", b =>
+                {
+                    b.Navigation("Fotos");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.Login", b =>
+                {
+                    b.Navigation("Clientes");
+
+                    b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.Usuario", b =>
+                {
+                    b.Navigation("Empresas");
                 });
 #pragma warning restore 612, 618
         }

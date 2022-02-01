@@ -5,7 +5,27 @@
       "ProjectGuid": "83cc03c9-ddf5-498d-b0c4-0d2f516619db",
       "DisplayName": "CheckInspecao.Api",
       "ColorIndex": 0
+    },
+    "80e3f2ab-ad1e-42bb-8a2e-a7c66664c5d8": {
+      "ProjectGuid": "80e3f2ab-ad1e-42bb-8a2e-a7c66664c5d8",
+      "DisplayName": "CheckInspecao.Repository",
+      "ColorIndex": 1
+    },
+    "c9a99041-3a1e-4654-94fc-a2438b74d238": {
+      "ProjectGuid": "c9a99041-3a1e-4654-94fc-a2438b74d238",
+      "DisplayName": "CheckInspecao.Transport",
+      "ColorIndex": 2
+    },
+    "64406fd8-5126-4f8f-b423-0eadd44fa3d4": {
+      "ProjectGuid": "64406fd8-5126-4f8f-b423-0eadd44fa3d4",
+      "DisplayName": "CheckInspecao.Models",
+      "ColorIndex": 3
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 4
 }
