@@ -36,19 +36,18 @@ namespace CheckInspecao.Api.Controllers
 
         [HttpPost("NovoDocumento")]
         public async Task<IActionResult>
-        NovoDocumento(int clienteId)
+        NovoDocumento(int clienteId, int perfilUsuarioId)
         {
             try
             {
-                var identity = HttpContext.User.Identity as ClaimsIdentity;
-                var claims = identity.Claims as List<Claim>;
-                var usuarioId =
-                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
-                var nomeUsuario =
-                    claims.FirstOrDefault(f => f.Type == "name").Value;
+                // var identity = HttpContext.User.Identity as ClaimsIdentity;
+                // var claims = identity.Claims as List<Claim>;
+                // var usuarioId =
+                //     int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+              
                 var doc =
                     await _documentoTransport
-                        .AbrirInspecao(usuarioId, clienteId);
+                        .AbrirInspecao(perfilUsuarioId, clienteId);
                 return Ok(doc);
             }
             catch (System.Exception ex)
@@ -67,8 +66,7 @@ namespace CheckInspecao.Api.Controllers
                 var claims = identity.Claims as List<Claim>;
                 var usuarioId =
                     int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
-                var nomeUsuario =
-                    claims.FirstOrDefault(f => f.Type == "name").Value;   
+                  
                 var doc = await _documentoTransport.SalvarDocumento(documento);
                 return Ok(doc);
             }

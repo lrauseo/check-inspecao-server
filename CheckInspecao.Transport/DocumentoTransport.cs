@@ -11,7 +11,7 @@ namespace CheckInspecao.Transport
 {
     public interface IDocumentoTransport
     {
-        Task<DocumentoInspecaoDTO> AbrirInspecao(int usuarioId, int clienteId);
+        Task<DocumentoInspecaoDTO> AbrirInspecao(int perfilUsuarioId, int clienteId);
         Task<DocumentoInspecaoDTO> GetDocumentoById(int documentoId);
         Task<List<DocumentoInspecaoDTO>> GetDocumentos(int usuarioId, int clienteId);
         string GetHtmlReport(int documentoId);
@@ -30,11 +30,11 @@ namespace CheckInspecao.Transport
             _mapper = mapper;
             _log = logger;
         }
-        public async Task<DocumentoInspecaoDTO> AbrirInspecao(int usuarioId, int clienteId)
+        public async Task<DocumentoInspecaoDTO> AbrirInspecao(int perfilUsuarioId, int clienteId)
         {
             try
             {
-                var doc = await _documentoRepo.AbrirInspecao(usuarioId, clienteId);
+                var doc = await _documentoRepo.AbrirInspecao(perfilUsuarioId, clienteId);
                 return _mapper.Map<DocumentoInspecaoDTO>(doc);
             }
             catch (System.Exception ex)

@@ -10,7 +10,8 @@ namespace CheckInspecao.Transport.DTO
         public DateTime DataDocumento { get; set; }
         public List<ItemDocumentoInspecaoDTO> Itens { get; set; }        
         
-        public UsuarioDTO UsuarioInspecao { get; set; }        
+        public int PerfilUsuarioId { get; set; }
+        public PerfilUsuarioDTO UsuarioInspecao { get; set; }        
         
         public ClienteDTO Cliente { get; set; }
     }

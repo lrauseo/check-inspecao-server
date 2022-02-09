@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CheckInspecao.Transport;
@@ -25,7 +27,7 @@ namespace CheckInspecao.Api.Controllers
             _usuarioTransport = usuarioTransport;            
         }
         [HttpPost("SalvarUsuario")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")] 
         public async Task<IActionResult> SalvarUsuario(UsuarioDTO usuarioDTO)
         {
             try
@@ -37,8 +39,22 @@ namespace CheckInspecao.Api.Controllers
             {                
                 return BadRequest(ex.Message);
             }
+        }        
+        
+        [HttpPost("CriarUsuario")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CriarUsuario(UsuarioDTO usuarioDTO)
+        {
+            try
+            {
+                var usuario = await _usuarioTransport.SalvarUsuario(usuarioDTO);
+                return Ok(usuario);
+            }
+            catch (System.Exception ex)
+            {                
+                return BadRequest(ex.Message);
+            }
         }
-
         [HttpPost("AutenticarUsuario")]
         [AllowAnonymous]
         public async Task<IActionResult> AutenticarUsuario(string login, string senha)
@@ -51,6 +67,26 @@ namespace CheckInspecao.Api.Controllers
             catch (System.Exception ex)
             {                
                 return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("Perfis")]
+        [Authorize(Roles = "Admin,User")] 
+        public async Task<IActionResult> PerfisUsuario()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var claims = identity.Claims as List<Claim>;
+                var usuarioId =
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+                
+                var usuario = await _usuarioTransport.PerfisUsuario(usuarioId);
+                return Ok(usuario);
+            }
+            catch (System.Exception ex)
+            {                
+                return BadRequest(ex.Message);
             }
         }
     }

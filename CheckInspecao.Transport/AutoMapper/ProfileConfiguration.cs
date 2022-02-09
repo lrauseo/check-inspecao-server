@@ -9,7 +9,9 @@ namespace Cadastros.Transport.AutoMapper
     {
         public ProfileConfiguration()
         {
-            CreateMap<Usuario,UsuarioDTO>().ReverseMap();
+            CreateMap<Usuario,UsuarioDTO>()
+            .ForMember(dest => dest.Senha, opt => opt.MapFrom(src => "**secret**"));
+            CreateMap<UsuarioDTO, Usuario>();            
             CreateMap<UsuarioEmpresa,UsuarioEmpresaDTO>().ReverseMap();
             CreateMap<Grupo,GrupoDTO>().ReverseMap();            
             CreateMap<DocumentoInspecao,DocumentoInspecaoDTO>().ReverseMap();
@@ -22,7 +24,7 @@ namespace Cadastros.Transport.AutoMapper
             
             CreateMap<Cliente,ClienteDTO>().ReverseMap();
             CreateMap<Empresa,EmpresaDTO>().ReverseMap();
-            CreateMap<Login,LoginDTO>().ReverseMap();
+            CreateMap<PerfilUsuario,PerfilUsuarioDTO>().ReverseMap();
             CreateMap<Foto,FotoDTO>().ReverseMap();
         }
     }

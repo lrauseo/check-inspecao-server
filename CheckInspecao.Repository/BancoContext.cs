@@ -15,9 +15,9 @@ namespace CheckInspecao.Repository
         public DbSet<ItemDocumentoInspecao> ItemDocumentoInspecao { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Foto> Fotos { get; set; }
-        public DbSet<Login> Logins { get; set; }
+        public DbSet<PerfilUsuario> PerfilUsuarios { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
-        public DbSet<UsuarioEmpresa> UsuariosEmpresas { get; set; }
+        public DbSet<UsuarioEmpresa> UsuariosEmpresas { get; set; }        
         public BancoContext(DbContextOptions<BancoContext> options) : base(options)
         {
 
@@ -26,7 +26,7 @@ namespace CheckInspecao.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new DocumentoInspecaoMap());
-            modelBuilder.ApplyConfiguration(new UsuarioEmpresaMap());
+            modelBuilder.ApplyConfiguration(new UsuarioEmpresaMap());            
 
         }
     }

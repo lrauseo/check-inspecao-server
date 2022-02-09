@@ -3,10 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CheckInspecao.Repository.Migrations
 {
-    public partial class v11 : Migration
+    public partial class v10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Clientes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    Cpf = table.Column<string>(type: "TEXT", nullable: true),
+                    DataCadastro = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clientes", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Empresas",
                 columns: table => new
@@ -41,17 +56,22 @@ namespace CheckInspecao.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Logins",
+                name: "Usuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UsuarioLogin = table.Column<string>(type: "TEXT", nullable: true),
-                    Senha = table.Column<string>(type: "TEXT", nullable: true)
+                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    FotoPerfil = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    Assinatura = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    Email = table.Column<string>(type: "TEXT", nullable: true),
+                    Senha = table.Column<string>(type: "TEXT", nullable: true),
+                    Role = table.Column<string>(type: "TEXT", nullable: true),
+                    Sexo = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Logins", x => x.Id);
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -76,78 +96,30 @@ namespace CheckInspecao.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clientes",
+                name: "PerfilUsuarios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: true),
-                    Cpf = table.Column<string>(type: "TEXT", nullable: true),
-                    DataCadastro = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LoginId = table.Column<int>(type: "INTEGER", nullable: true)
+                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false),
+                    EmpresaId = table.Column<int>(type: "INTEGER", nullable: true),
+                    IsInativo = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
+                    table.PrimaryKey("PK_PerfilUsuarios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Clientes_Logins_LoginId",
-                        column: x => x.LoginId,
-                        principalTable: "Logins",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: true),
-                    FotoPerfil = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    Assinatura = table.Column<byte[]>(type: "BLOB", nullable: true),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
-                    Senha = table.Column<string>(type: "TEXT", nullable: true),
-                    Role = table.Column<string>(type: "TEXT", nullable: true),
-                    Sexo = table.Column<string>(type: "TEXT", nullable: true),
-                    LoginId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Usuarios_Logins_LoginId",
-                        column: x => x.LoginId,
-                        principalTable: "Logins",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Documentos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DataDocumento = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    UsuarioInspecaoId = table.Column<int>(type: "INTEGER", nullable: true),
-                    ClienteId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Documentos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Documentos_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
+                        name: "FK_PerfilUsuarios_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Documentos_Usuarios_UsuarioInspecaoId",
-                        column: x => x.UsuarioInspecaoId,
+                        name: "FK_PerfilUsuarios_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,6 +142,33 @@ namespace CheckInspecao.Repository.Migrations
                         name: "FK_UsuariosEmpresas_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Documentos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DataDocumento = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    PerfilUsuarioId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ClienteId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Documentos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Documentos_Clientes_ClienteId",
+                        column: x => x.ClienteId,
+                        principalTable: "Clientes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Documentos_PerfilUsuarios_PerfilUsuarioId",
+                        column: x => x.PerfilUsuarioId,
+                        principalTable: "PerfilUsuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -226,19 +225,14 @@ namespace CheckInspecao.Repository.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clientes_LoginId",
-                table: "Clientes",
-                column: "LoginId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Documentos_ClienteId",
                 table: "Documentos",
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Documentos_UsuarioInspecaoId",
+                name: "IX_Documentos_PerfilUsuarioId",
                 table: "Documentos",
-                column: "UsuarioInspecaoId");
+                column: "PerfilUsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Fotos_ItemInspecaoId",
@@ -261,9 +255,14 @@ namespace CheckInspecao.Repository.Migrations
                 column: "GrupoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_LoginId",
-                table: "Usuarios",
-                column: "LoginId");
+                name: "IX_PerfilUsuarios_EmpresaId",
+                table: "PerfilUsuarios",
+                column: "EmpresaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PerfilUsuarios_UsuarioId",
+                table: "PerfilUsuarios",
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UsuariosEmpresas_UsuarioId",
@@ -283,9 +282,6 @@ namespace CheckInspecao.Repository.Migrations
                 name: "ItemDocumentoInspecao");
 
             migrationBuilder.DropTable(
-                name: "Empresas");
-
-            migrationBuilder.DropTable(
                 name: "Documentos");
 
             migrationBuilder.DropTable(
@@ -295,13 +291,16 @@ namespace CheckInspecao.Repository.Migrations
                 name: "Clientes");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "PerfilUsuarios");
 
             migrationBuilder.DropTable(
                 name: "Grupos");
 
             migrationBuilder.DropTable(
-                name: "Logins");
+                name: "Empresas");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
         }
     }
 }

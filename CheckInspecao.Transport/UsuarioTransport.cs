@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using CheckInspecao.Models;
@@ -13,6 +14,7 @@ namespace CheckInspecao.Transport
     {
         Task<UsuarioAutenticadoDTO> AutenticaUsuario(string login, string senha);
         Task<UsuarioDTO> SalvarUsuario(UsuarioDTO usuario);
+        Task<IList<PerfilUsuarioDTO>> PerfisUsuario(int usuarioId);
     }
 
     public class UsuarioTransport : IUsuarioTransport
@@ -82,6 +84,13 @@ namespace CheckInspecao.Transport
 
                 throw ex;
             }
+        }
+
+        public async Task<IList<PerfilUsuarioDTO>> PerfisUsuario(int usuarioId)
+        {
+            var perfis = await _usuarioRepository.PerfisUsuario(usuarioId);
+            return _mapper.Map<IList<PerfilUsuarioDTO>>(perfis);
+
         }
     }
 }

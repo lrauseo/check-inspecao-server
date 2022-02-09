@@ -11,10 +11,10 @@ namespace CheckInspecao.Models
         public string Email { get; set; }
         public string Senha { get; set; }
         public string Role { get; set; } = "User";
-
         public string Sexo { get; set; }
 
         public IList<UsuarioEmpresa> Empresas { get;}
+        public IList<PerfilUsuario> PefilUsuarios { get; set; }
 
     }
 }

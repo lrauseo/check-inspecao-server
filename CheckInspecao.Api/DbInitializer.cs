@@ -84,6 +84,11 @@ namespace CheckInspecao
                             .DeserializeObject<Usuario>(GetArquivoSeed(nameof(context.Usuarios).ToLower()));
             context.Usuarios.Add(usuario);
             context.SaveChanges();
+
+            context.PerfilUsuarios.Add(new PerfilUsuario(){
+                UsuarioId = usuario.Id,
+            });
+            context.SaveChanges();
         }
         private static void SeedCliente(BancoContext context)
         {

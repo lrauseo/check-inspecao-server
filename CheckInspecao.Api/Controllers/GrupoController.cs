@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CheckInspecao.Transport.Exceptions;
 using CheckInspecao.Transport.GrupoTransport;
@@ -9,7 +12,7 @@ namespace CheckInspecao.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize(Roles = "User,Admin")]
+    [Authorize]
     public class GrupoController : ControllerBase
     {
         private readonly ILogger<GrupoTransport> _logger;
@@ -22,10 +25,17 @@ namespace CheckInspecao.Api.Controllers
         }
 
         [HttpGet]        
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> GetGrupos()
         {
             try
             {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var claims = identity.Claims as List<Claim>;
+                var usuarioId =
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+                var nomeUsuario =
+                    claims.FirstOrDefault(f => f.Type == "name").Value;
                 var grupos = await _grupoTransport.GetGrupos();
                 return Ok(grupos);
             }
@@ -51,6 +61,12 @@ namespace CheckInspecao.Api.Controllers
         {
             try
             {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var claims = identity.Claims as List<Claim>;
+                var usuarioId =
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+                var nomeUsuario =
+                    claims.FirstOrDefault(f => f.Type == "name").Value;
                 var lista = await _grupoTransport.BuscarItensInspecao(grupoId);
                 return Ok(lista);
             }
