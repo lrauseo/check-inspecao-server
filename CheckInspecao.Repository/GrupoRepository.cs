@@ -13,6 +13,8 @@ namespace Cadastros.Repository.GrupoRepository
         Task<IList<Grupo>> GetGrupos();   
         Task<Grupo> CadastrarGrupo(Grupo grupo);
         Task<IList<ItemInspecao>> BuscarItensInspecao(int grupoId);
+
+        Task<ItemInspecao> SalvarItemInspecao(ItemInspecao itemInspecao);
     }
 
     public class GrupoRepository : CadastroRepository, IGrupoRepository
@@ -82,6 +84,29 @@ namespace Cadastros.Repository.GrupoRepository
             {                
                 var lista = _context.ItensInspecao.AsNoTracking().Where(w => w.Grupo.Id == grupoId);                
                 return await lista.ToListAsync();
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<ItemInspecao> SalvarItemInspecao(ItemInspecao itemInspecao)
+        {
+             try
+            {    
+                itemInspecao.GrupoId = itemInspecao.Grupo.Id;   
+                itemInspecao.Grupo = null;         
+                if (itemInspecao.Id > 0 && _context.ItensInspecao.AsNoTracking().Any(a => a.Id == itemInspecao.Id))
+                {
+                    Update<ItemInspecao>(itemInspecao);
+                }
+                else
+                {
+                    await AddAsync<ItemInspecao>(itemInspecao);
+                }
+                await SaveChangesAsync();
+                return itemInspecao;
             }
             catch (System.Exception ex)
             {

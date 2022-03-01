@@ -14,6 +14,8 @@ namespace CheckInspecao.Transport.GrupoTransport
         Task<IList<GrupoDTO>> GetGrupos();        
         Task<GrupoDTO> CadastrarGrupo(GrupoDTO grupoDTO);
         Task<IList<ItemInspecaoDTO>> BuscarItensInspecao(int grupoId);
+
+        Task<ItemInspecaoDTO> SalvarItemInspecao(ItemInspecaoDTO itemInspecaoDTO);
     }
 
     public class GrupoTransport : IGrupoTransport
@@ -76,7 +78,21 @@ namespace CheckInspecao.Transport.GrupoTransport
             {
                 throw ex;
             }
-        }      
+        }
+
+        public async Task<ItemInspecaoDTO> SalvarItemInspecao(ItemInspecaoDTO itemInspecaoDTO)
+        {
+             try
+            {
+                var item = _mapper.Map<ItemInspecao>(itemInspecaoDTO);
+                item = await _grupoRepository.SalvarItemInspecao(item);
+                return _mapper.Map<ItemInspecaoDTO>(item);
+            }
+            catch (System.Exception ex)
+            {
+                throw new CadastrosException(ex.Message);
+            }
+        }
     }
 }
 

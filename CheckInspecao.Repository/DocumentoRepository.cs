@@ -34,7 +34,7 @@ namespace CheckInspecao.Repository
         AbrirInspecao(int perfilId, int clienteId)
         {
             try
-            {
+            {                
                 var doc =
                     new DocumentoInspecao()
                     {
@@ -113,69 +113,28 @@ namespace CheckInspecao.Repository
         public async Task<DocumentoInspecao>
         SalvarDocumento(DocumentoInspecao documento)
         {
+            DocumentoInspecao docExistente;
             try
             {
-                var docExistente =
+                docExistente =
                     await _context
                         .Documentos
                         .Include(i => i.Itens)
                         .ThenInclude(i1 => i1.Fotos)
                         .FirstOrDefaultAsync(d => d.Id == documento.Id);
-                _context.Entry(docExistente).CurrentValues.SetValues(documento);
-
-                // await SaveChangesAsync();
-                // var itensExcluidos = documento.Itens.Except(docExistente.Itens).ToList();
-                foreach (var item in documento.Itens)
-                {
-                    var itemExistente =
-                        docExistente.Itens.FirstOrDefault(a => a.Id == item.Id);
-                    if (itemExistente != null)
+                if(docExistente != null)
+                    _context.Entry(docExistente).CurrentValues.SetValues(documento);
+                else{ 
+                    foreach (var item in documento.Itens)
                     {
-                        _context
-                            .Entry(itemExistente)
-                            .CurrentValues
-                            .SetValues(item);
-
-                        // _context.Entry(foto.ItemInspecao).State = EntityState.Detached;
-                        foreach (var foto in item.Fotos)
-                        {
-                            //foto.ItemInspecao = null;
-                            // _context.Attach(foto.ItemInspecao);
-                            var fotoExiste =
-                                itemExistente
-                                    .Fotos
-                                    .FirstOrDefault(a => a.Id == foto.Id);
-                            if (fotoExiste != null)
-                                _context
-                                    .Entry(fotoExiste)
-                                    .CurrentValues
-                                    .SetValues(foto);
-                            else
-                            {
-                                itemExistente.Fotos.Add (foto);
-                            }
-                        }
+                        item.Item.Grupo = null;
                     }
-                    else
-                    {
-                        item.Documento = docExistente;
-                        item.Item =
-                            await _context
-                                .ItensInspecao
-                                .FirstOrDefaultAsync(a => a.Id == item.Item.Id)
-                                ?? item.Item;
-                        foreach (var foto in item.Fotos)
-                        {
-                            foto.ItemInspecao = item;
-                        }
-                        Update<ItemDocumentoInspecao> (item);
-                    }
-
-                    // if (itensExcluidos.Count() > 0)
-                    //     _context.ItemDocumentoInspecao.RemoveRange(itensExcluidos);
-                    // Update<ItemDocumentoInspecao>(item);
-                    await SaveChangesAsync();
+                    documento.DataDocumento = System.DateTime.Now;
+                    documento.PerfilUsuarioId = documento.UsuarioInspecao.Id;
+                    documento.UsuarioInspecao = null;
+                    Update(documento);
                 }
+                await SaveChangesAsync();
                 return documento;
             }
             catch (System.Exception ex)

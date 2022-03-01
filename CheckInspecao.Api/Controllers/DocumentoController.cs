@@ -65,7 +65,8 @@ namespace CheckInspecao.Api.Controllers
              var identity = HttpContext.User.Identity as ClaimsIdentity;
                 var claims = identity.Claims as List<Claim>;
                 var usuarioId =
-                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").
+                    Value);
                   
                 var doc = await _documentoTransport.SalvarDocumento(documento);
                 return Ok(doc);

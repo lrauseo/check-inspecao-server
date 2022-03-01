@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CheckInspecao.Transport.DTO;
 using CheckInspecao.Transport.Exceptions;
 using CheckInspecao.Transport.GrupoTransport;
 using Microsoft.AspNetCore.Authorization;
@@ -72,6 +73,42 @@ namespace CheckInspecao.Api.Controllers
             }
             catch (System.Exception ex)
             {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("SalvarItensInspecao")]
+        public async Task<IActionResult> SalvarItensInspecao(ItemInspecaoDTO itemInspecaoDTO)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var claims = identity.Claims as List<Claim>;
+                var usuarioId =
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+                var nomeUsuario =
+                    claims.FirstOrDefault(f => f.Type == "name").Value;
+                var item = await _grupoTransport.SalvarItemInspecao(itemInspecaoDTO);
+                return Ok(item);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> SalvarGrupo(GrupoDTO grupo){
+            try
+            {
+                
+                var grupoSalvo = await _grupoTransport.CadastrarGrupo(grupo);
+                return Ok(grupoSalvo);
+            }
+            catch (System.Exception ex)
+            {
+                
                 return BadRequest(ex);
             }
         }
