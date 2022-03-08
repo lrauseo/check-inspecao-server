@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CheckInspecao.Repository.Migrations
 {
-    public partial class v10 : Migration
+    public partial class v11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,6 +56,20 @@ namespace CheckInspecao.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "QuestionarioFormulario",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Descricao = table.Column<string>(type: "TEXT", nullable: true),
+                    IsInativo = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionarioFormulario", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
                 {
@@ -80,7 +94,7 @@ namespace CheckInspecao.Repository.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    GrupoId = table.Column<int>(type: "INTEGER", nullable: true),
+                    GrupoId = table.Column<int>(type: "INTEGER", nullable: false),
                     Classificacao = table.Column<string>(type: "TEXT", nullable: true),
                     Descricao = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -92,7 +106,7 @@ namespace CheckInspecao.Repository.Migrations
                         column: x => x.GrupoId,
                         principalTable: "Grupos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -142,6 +156,30 @@ namespace CheckInspecao.Repository.Migrations
                         name: "FK_UsuariosEmpresas_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemInspecaoQuestionarioFormularios",
+                columns: table => new
+                {
+                    ItemInspecaoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    QuestionarioFormularioId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemInspecaoQuestionarioFormularios", x => new { x.ItemInspecaoId, x.QuestionarioFormularioId });
+                    table.ForeignKey(
+                        name: "FK_ItemInspecaoQuestionarioFormularios_ItensInspecao_ItemInspecaoId",
+                        column: x => x.ItemInspecaoId,
+                        principalTable: "ItensInspecao",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ItemInspecaoQuestionarioFormularios_QuestionarioFormulario_QuestionarioFormularioId",
+                        column: x => x.QuestionarioFormularioId,
+                        principalTable: "QuestionarioFormulario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -250,6 +288,11 @@ namespace CheckInspecao.Repository.Migrations
                 column: "ItemId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ItemInspecaoQuestionarioFormularios_QuestionarioFormularioId",
+                table: "ItemInspecaoQuestionarioFormularios",
+                column: "QuestionarioFormularioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ItensInspecao_GrupoId",
                 table: "ItensInspecao",
                 column: "GrupoId");
@@ -276,10 +319,16 @@ namespace CheckInspecao.Repository.Migrations
                 name: "Fotos");
 
             migrationBuilder.DropTable(
+                name: "ItemInspecaoQuestionarioFormularios");
+
+            migrationBuilder.DropTable(
                 name: "UsuariosEmpresas");
 
             migrationBuilder.DropTable(
                 name: "ItemDocumentoInspecao");
+
+            migrationBuilder.DropTable(
+                name: "QuestionarioFormulario");
 
             migrationBuilder.DropTable(
                 name: "Documentos");

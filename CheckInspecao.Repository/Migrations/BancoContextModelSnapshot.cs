@@ -187,6 +187,21 @@ namespace CheckInspecao.Repository.Migrations
                     b.ToTable("ItensInspecao");
                 });
 
+            modelBuilder.Entity("CheckInspecao.Models.ItemInspecaoQuestionarioFormulario", b =>
+                {
+                    b.Property<int>("ItemInspecaoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("QuestionarioFormularioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ItemInspecaoId", "QuestionarioFormularioId");
+
+                    b.HasIndex("QuestionarioFormularioId");
+
+                    b.ToTable("ItemInspecaoQuestionarioFormularios");
+                });
+
             modelBuilder.Entity("CheckInspecao.Models.PerfilUsuario", b =>
                 {
                     b.Property<int>("Id")
@@ -209,6 +224,23 @@ namespace CheckInspecao.Repository.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("PerfilUsuarios");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.QuestionarioFormulario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsInativo")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestionarioFormulario");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.Usuario", b =>
@@ -310,6 +342,25 @@ namespace CheckInspecao.Repository.Migrations
                     b.Navigation("Grupo");
                 });
 
+            modelBuilder.Entity("CheckInspecao.Models.ItemInspecaoQuestionarioFormulario", b =>
+                {
+                    b.HasOne("CheckInspecao.Models.ItemInspecao", "ItemInspecao")
+                        .WithMany("Questionarios")
+                        .HasForeignKey("ItemInspecaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CheckInspecao.Models.QuestionarioFormulario", "QuestionarioFormulario")
+                        .WithMany("ItensQuestionario")
+                        .HasForeignKey("QuestionarioFormularioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ItemInspecao");
+
+                    b.Navigation("QuestionarioFormulario");
+                });
+
             modelBuilder.Entity("CheckInspecao.Models.PerfilUsuario", b =>
                 {
                     b.HasOne("CheckInspecao.Models.Empresa", "Empresa")
@@ -364,6 +415,16 @@ namespace CheckInspecao.Repository.Migrations
             modelBuilder.Entity("CheckInspecao.Models.ItemDocumentoInspecao", b =>
                 {
                     b.Navigation("Fotos");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.ItemInspecao", b =>
+                {
+                    b.Navigation("Questionarios");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.QuestionarioFormulario", b =>
+                {
+                    b.Navigation("ItensQuestionario");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.Usuario", b =>

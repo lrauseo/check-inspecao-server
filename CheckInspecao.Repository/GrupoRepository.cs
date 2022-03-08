@@ -82,7 +82,7 @@ namespace Cadastros.Repository.GrupoRepository
         {
             try
             {                
-                var lista = _context.ItensInspecao.AsNoTracking().Where(w => w.Grupo.Id == grupoId);                
+                var lista = _context.ItensInspecao.Include(g => g.Grupo).AsNoTracking().Where(w => w.Grupo.Id == grupoId);                
                 return await lista.ToListAsync();
             }
             catch (System.Exception ex)

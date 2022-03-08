@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CheckInspecao.Repository.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    [Migration("20220203233426_v1.0")]
-    partial class v10
+    [Migration("20220307205010_v1.1")]
+    partial class v11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -179,7 +179,7 @@ namespace CheckInspecao.Repository.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("GrupoId")
+                    b.Property<int>("GrupoId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -187,6 +187,21 @@ namespace CheckInspecao.Repository.Migrations
                     b.HasIndex("GrupoId");
 
                     b.ToTable("ItensInspecao");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.ItemInspecaoQuestionarioFormulario", b =>
+                {
+                    b.Property<int>("ItemInspecaoId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("QuestionarioFormularioId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ItemInspecaoId", "QuestionarioFormularioId");
+
+                    b.HasIndex("QuestionarioFormularioId");
+
+                    b.ToTable("ItemInspecaoQuestionarioFormularios");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.PerfilUsuario", b =>
@@ -211,6 +226,23 @@ namespace CheckInspecao.Repository.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("PerfilUsuarios");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.QuestionarioFormulario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsInativo")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestionarioFormulario");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.Usuario", b =>
@@ -305,9 +337,30 @@ namespace CheckInspecao.Repository.Migrations
                 {
                     b.HasOne("CheckInspecao.Models.Grupo", "Grupo")
                         .WithMany()
-                        .HasForeignKey("GrupoId");
+                        .HasForeignKey("GrupoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Grupo");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.ItemInspecaoQuestionarioFormulario", b =>
+                {
+                    b.HasOne("CheckInspecao.Models.ItemInspecao", "ItemInspecao")
+                        .WithMany("Questionarios")
+                        .HasForeignKey("ItemInspecaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CheckInspecao.Models.QuestionarioFormulario", "QuestionarioFormulario")
+                        .WithMany("ItensQuestionario")
+                        .HasForeignKey("QuestionarioFormularioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ItemInspecao");
+
+                    b.Navigation("QuestionarioFormulario");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.PerfilUsuario", b =>
@@ -364,6 +417,16 @@ namespace CheckInspecao.Repository.Migrations
             modelBuilder.Entity("CheckInspecao.Models.ItemDocumentoInspecao", b =>
                 {
                     b.Navigation("Fotos");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.ItemInspecao", b =>
+                {
+                    b.Navigation("Questionarios");
+                });
+
+            modelBuilder.Entity("CheckInspecao.Models.QuestionarioFormulario", b =>
+                {
+                    b.Navigation("ItensQuestionario");
                 });
 
             modelBuilder.Entity("CheckInspecao.Models.Usuario", b =>

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CheckInspecao.Models;
 using CheckInspecao.Transport;
 using CheckInspecao.Transport.DTO;
 using DinkToPdf;
@@ -44,7 +45,6 @@ namespace CheckInspecao.Api.Controllers
                 // var claims = identity.Claims as List<Claim>;
                 // var usuarioId =
                 //     int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
-              
                 var doc =
                     await _documentoTransport
                         .AbrirInspecao(perfilUsuarioId, clienteId);
@@ -62,12 +62,11 @@ namespace CheckInspecao.Api.Controllers
         {
             try
             {
-             var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
                 var claims = identity.Claims as List<Claim>;
                 var usuarioId =
-                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").
-                    Value);
-                  
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+
                 var doc = await _documentoTransport.SalvarDocumento(documento);
                 return Ok(doc);
             }
@@ -110,7 +109,8 @@ namespace CheckInspecao.Api.Controllers
                 var nomeUsuario =
                     claims.FirstOrDefault(f => f.Type == "name").Value;
                 var doc =
-                    await _documentoTransport.GetDocumentos(usuarioId, clienteId);
+                    await _documentoTransport
+                        .GetDocumentos(usuarioId, clienteId);
                 return Ok(doc);
             }
             catch (System.Exception ex)
@@ -119,11 +119,74 @@ namespace CheckInspecao.Api.Controllers
             }
         }
 
+        [HttpPost("QuestionarioFormulario")]
+        public async Task<IActionResult>
+        SalvarQuestionarioFormulario(
+            QuestionarioFormularioDTO questionarioFormularioDTO
+        )
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var claims = identity.Claims as List<Claim>;
+                var usuarioId =
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+
+                var doc =
+                    await _documentoTransport
+                        .SalvarQuestionarioFormulario(questionarioFormularioDTO);
+                return Ok(doc);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("QuestionarioFormulario")]
+        public async Task<IActionResult> GetQuestionarios()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var claims = identity.Claims as List<Claim>;
+                var usuarioId =
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+
+                var doc = await _documentoTransport.GetQuestionarios();
+                return Ok(doc);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("ItemInspecaoByFormulario")]
+        public async Task<IActionResult> BuscaItemInspecaoByFormulario(int formularioId)
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var claims = identity.Claims as List<Claim>;
+                var usuarioId =
+                    int.Parse(claims.FirstOrDefault(f => f.Type == "id").Value);
+
+                var doc = await _documentoTransport.BuscaItensDocumentoByFormulario(formularioId);
+                return Ok(doc);
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("CreatePDF")]
         public IActionResult CreatePDF()
         {
             var globalSettings =
-                new GlobalSettings {
+                new GlobalSettings
+                {
                     ColorMode = ColorMode.Color,
                     Orientation = Orientation.Portrait,
                     PaperSize = PaperKind.A4,
@@ -133,10 +196,11 @@ namespace CheckInspecao.Api.Controllers
                     //Out = (@"PDF" + Path.DirectorySeparatorChar + "Employee_Report.pdf")
                 };
             var html = _documentoTransport.GetHtmlReport(1);
-            _log.LogInformation (html);
-            _log.LogError (html);
+            _log.LogInformation(html);
+            _log.LogError(html);
             var objectSettings =
-                new ObjectSettings {
+                new ObjectSettings
+                {
                     PagesCount = true,
                     HtmlContent = html,
                     //opcao para gerar pdf da pagina inteira
@@ -153,7 +217,8 @@ namespace CheckInspecao.Api.Controllers
                     // FooterSettings = { FontName = "Arial", FontSize = 9, Center = "Report Footer", Line = true }
                 };
             var pdf =
-                new HtmlToPdfDocument {
+                new HtmlToPdfDocument
+                {
                     GlobalSettings = globalSettings,
                     Objects = { objectSettings }
                 };

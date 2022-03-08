@@ -1,4 +1,4 @@
 {
-    "appService.deploySubpath": "bin/Release/publish",
+    "appService.deploySubpath": "bin/Release/net5.0/publish/",
     "appService.defaultWebAppToDeploy": "/subscriptions/508ce0fe-b9e1-4ce2-af7f-e510845850aa/resourceGroups/Desenvolvimento/providers/Microsoft.Web/sites/CheckInspecao-Api-desenv"
 }

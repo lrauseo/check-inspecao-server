@@ -26,6 +26,8 @@ namespace Cadastros.Transport.AutoMapper
             CreateMap<Empresa,EmpresaDTO>().ReverseMap();
             CreateMap<PerfilUsuario,PerfilUsuarioDTO>().ReverseMap();
             CreateMap<Foto,FotoDTO>().ReverseMap();
+            CreateMap<QuestionarioFormulario, QuestionarioFormularioDTO>().ReverseMap();
+            CreateMap<ItemInspecaoQuestionarioFormulario, ItemInspecaoQuestionarioFormularioDTO>().ReverseMap();
         }
     }
 }

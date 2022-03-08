@@ -39,7 +39,7 @@ namespace CheckInspecao.Api
                 {
                     webBuilder.UseIISIntegration();
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://192.168.0.6:5002");
+                    webBuilder.UseUrls("http://192.168.0.5:5002");
                 });
     }
 }

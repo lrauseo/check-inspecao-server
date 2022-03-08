@@ -11,30 +11,56 @@ namespace CheckInspecao.Transport
 {
     public interface IDocumentoTransport
     {
-        Task<DocumentoInspecaoDTO> AbrirInspecao(int perfilUsuarioId, int clienteId);
+        Task<DocumentoInspecaoDTO>
+        AbrirInspecao(
+            int perfilUsuarioId, int clienteId
+        );
+
         Task<DocumentoInspecaoDTO> GetDocumentoById(int documentoId);
+
         Task<List<DocumentoInspecaoDTO>> GetDocumentos(int usuarioId, int clienteId);
+
         string GetHtmlReport(int documentoId);
+
         Task<DocumentoInspecaoDTO> SalvarDocumento(DocumentoInspecaoDTO documento);
+
+        Task<QuestionarioFormulario> SalvarQuestionarioFormulario(QuestionarioFormularioDTO questionarioFormularioDTO);
+
+        Task<IList<QuestionarioFormularioDTO>> GetQuestionarios();
+
+        Task<IList<ItemInspecaoDTO>> BuscaItensDocumentoByFormulario(int formularioId);
+
+
+
     }
 
     public class DocumentoTransport : IDocumentoTransport
     {
         private readonly IDocumentoRepository _documentoRepo;
+
         private readonly IMapper _mapper;
+
         private readonly ILogger<DocumentoTransport> _log;
 
-        public DocumentoTransport(IDocumentoRepository documentoRepo, IMapper mapper, ILogger<DocumentoTransport> logger)
+        public DocumentoTransport(
+            IDocumentoRepository documentoRepo,
+            IMapper mapper,
+            ILogger<DocumentoTransport> logger
+        )
         {
             _documentoRepo = documentoRepo;
             _mapper = mapper;
             _log = logger;
         }
-        public async Task<DocumentoInspecaoDTO> AbrirInspecao(int perfilUsuarioId, int clienteId)
+
+        public async Task<DocumentoInspecaoDTO>
+        AbrirInspecao(int perfilUsuarioId, int clienteId)
         {
             try
             {
-                var doc = await _documentoRepo.AbrirInspecao(perfilUsuarioId, clienteId);
+                var doc =
+                    await _documentoRepo
+                        .AbrirInspecao(perfilUsuarioId, clienteId);
                 return _mapper.Map<DocumentoInspecaoDTO>(doc);
             }
             catch (System.Exception ex)
@@ -42,7 +68,9 @@ namespace CheckInspecao.Transport
                 throw ex;
             }
         }
-        public async Task<DocumentoInspecaoDTO> SalvarDocumento(DocumentoInspecaoDTO documento)
+
+        public async Task<DocumentoInspecaoDTO>
+        SalvarDocumento(DocumentoInspecaoDTO documento)
         {
             try
             {
@@ -55,7 +83,9 @@ namespace CheckInspecao.Transport
                 throw ex;
             }
         }
-        public async Task<DocumentoInspecaoDTO> GetDocumentoById(int documentoId)
+
+        public async Task<DocumentoInspecaoDTO>
+        GetDocumentoById(int documentoId)
         {
             try
             {
@@ -67,11 +97,14 @@ namespace CheckInspecao.Transport
                 throw ex;
             }
         }
-        public async Task<List<DocumentoInspecaoDTO>> GetDocumentos(int usuarioId, int clienteId)
+
+        public async Task<List<DocumentoInspecaoDTO>>
+        GetDocumentos(int usuarioId, int clienteId)
         {
             try
             {
-                var doc = await _documentoRepo.GetDocumentos(usuarioId, clienteId);
+                var doc =
+                    await _documentoRepo.GetDocumentos(usuarioId, clienteId);
                 return _mapper.Map<List<DocumentoInspecaoDTO>>(doc);
             }
             catch (System.Exception ex)
@@ -79,19 +112,60 @@ namespace CheckInspecao.Transport
                 throw ex;
             }
         }
+
+        public async Task<QuestionarioFormulario>
+        SalvarQuestionarioFormulario(
+            QuestionarioFormularioDTO questionarioFormularioDTO
+        )
+        {
+            try
+            {
+                var questionario =
+                    _mapper
+                        .Map<QuestionarioFormulario>(questionarioFormularioDTO);
+                return await _documentoRepo
+                    .SalvarQuestionarioFormulario(questionario);
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public string GetHtmlReport(int documentoId)
         {
             try
             {
                 var employees =
-                new List<EmployeeDTO>{
-                    new EmployeeDTO{Name = "Mike", LastName="Turner", Age=35, Gender="Male"},
-                    new EmployeeDTO{Name = "Daiane", LastName="Rauseo", Age=28, Gender="Female"},
-                    new EmployeeDTO{Name = "Leandro", LastName="Rauseo", Age=35, Gender="Male"},
-                    new EmployeeDTO{Name = "Tiago", LastName="Rada", Age=40, Gender="Male"},
-                };
+                    new List<EmployeeDTO> {
+                        new EmployeeDTO {
+                            Name = "Mike",
+                            LastName = "Turner",
+                            Age = 35,
+                            Gender = "Male"
+                        },
+                        new EmployeeDTO {
+                            Name = "Daiane",
+                            LastName = "Rauseo",
+                            Age = 28,
+                            Gender = "Female"
+                        },
+                        new EmployeeDTO {
+                            Name = "Leandro",
+                            LastName = "Rauseo",
+                            Age = 35,
+                            Gender = "Male"
+                        },
+                        new EmployeeDTO {
+                            Name = "Tiago",
+                            LastName = "Rada",
+                            Age = 40,
+                            Gender = "Male"
+                        }
+                    };
                 var sb = new StringBuilder();
-                sb.Append(@"
+                sb
+                    .Append(@"
                     <html>
                     <head></head>
                     <body>
@@ -107,27 +181,55 @@ namespace CheckInspecao.Transport
                 ");
                 foreach (var item in employees)
                 {
-                    sb.AppendFormat(@"
+                    sb
+                        .AppendFormat(@"
                     <tr>
                         <td>{0}</td>
                         <td>{1}</td>
                         <td>{2}</td>
                         <td>{3}</td>
                     </tr>
-                    ", item.Name
-                         , item.LastName
-                         , item.Age
-                         , item.Gender
-                    );
+                    ",
+                        item.Name,
+                        item.LastName,
+                        item.Age,
+                        item.Gender);
                 }
                 sb.Append(@"</table>");
                 sb.Append(@"</body>");
                 sb.Append(@"</html>");
-                
+
                 return sb.ToString();
             }
             catch (System.Exception ex)
             {
+                throw ex;
+            }
+        }
+
+        public async Task<IList<QuestionarioFormularioDTO>> GetQuestionarios()
+        {
+            try
+            {
+                var dados = await _documentoRepo.BuscarTodosQuestionarios();
+                return _mapper.Map<IList<QuestionarioFormularioDTO>>(dados);
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<IList<ItemInspecaoDTO>> BuscaItensDocumentoByFormulario(int formularioId)
+        {
+            try
+            {
+                var dados = await _documentoRepo.BuscaItensDocumentoByFormulario(formularioId);
+                return _mapper.Map<IList<ItemInspecaoDTO>>(dados);
+            }
+            catch (System.Exception ex)
+            {
+
                 throw ex;
             }
         }

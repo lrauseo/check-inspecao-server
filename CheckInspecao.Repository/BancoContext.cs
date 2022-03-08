@@ -18,6 +18,9 @@ namespace CheckInspecao.Repository
         public DbSet<PerfilUsuario> PerfilUsuarios { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<UsuarioEmpresa> UsuariosEmpresas { get; set; }        
+
+        public DbSet<QuestionarioFormulario> QuestionarioFormulario { get; set; }
+        public DbSet<ItemInspecaoQuestionarioFormulario> ItemInspecaoQuestionarioFormularios { get; set; }
         public BancoContext(DbContextOptions<BancoContext> options) : base(options)
         {
 
@@ -27,6 +30,7 @@ namespace CheckInspecao.Repository
         {
             modelBuilder.ApplyConfiguration(new DocumentoInspecaoMap());
             modelBuilder.ApplyConfiguration(new UsuarioEmpresaMap());            
+            modelBuilder.ApplyConfiguration(new ItemInspecaoQuestionarioFormularioMap());  
 
         }
     }
